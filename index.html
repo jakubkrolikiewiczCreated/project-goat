@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zadanie</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f7fa;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    background: white;
+    width: 500px;
+    max-width: 90%;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.task-number {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+h1 {
+    color: #222;
+}
+
+p {
+    color: #555;
+}
+
+button {
+    border: none;
+    background: #2563eb;
+    color: white;
+    padding: 14px 28px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button.done {
+    background: #16a34a;
+}
+
+.message {
+    margin-top: 15px;
+    color: #16a34a;
+    display: none;
+    font-weight: bold;
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+
+    <div id="taskNumber" class="task-number"></div>
+
+    <h1 id="taskTitle"></h1>
+
+    <p id="taskText"></p>
+
+    <button id="doneBtn" onclick="markDone()">Ukończone</button>
+
+    <div id="message" class="message">✓ Quest zakończony</div>
+
+</div>
+
+<script>
+const taskTitles = {
+    1: "Przepierdoliłem kupę siana",
+    2: "Piłkarski GOAT",
+    3: "Głos Komentatora",
+    4: "Mistrz Ceremonii",
+    5: "Strateg Wojny",
+    6: "Widzewska Afryka",
+    7: "Kronika SLO",
+    8: "Panteon Chwały",
+    9: "Dymne Przymierze",
+    10: "Władca Rusztu",
+    11: "Kości zostały rzucone",
+    12: "Arena Bohaterów",
+    13: "Kwaśny Finał (Bonus)"
+};
+
+const taskTexts = {
+    1: "Jesteś uczestnikiem MasterChef Junior - przygotuj dowolnego drinka (w liczbie 3), a następnie przekaż go do spróbowania Jury - zadanie zostanie zaliczone, gdy 2 sędziom zasmakuje ten drink.",
+    2: "Odbij 10 razy dowolną częścią ciała piłkę (masz na to 5 prób).",
+    3: "Przytocz z pamięci 5 kultowych cytatów z serii gier FIFA.",
+    4: "Wygłoś oryginalny, rymowany wiersz-toast, który porwie wszystkich do wzniesienia kieliszków.",
+    5: "Rozegraj partię w klasyczną grę karcianą Wojna i wygraj przewagą dokładnie 3 punktów.",
+    6: "Wymień z nazwiska 5 czarnoskórych piłkarzy, którzy reprezentowali Widzew Łódź.",
+    7: "Wymień 10 nauczycieli z liceum SLO wraz z nauczanymi przedmiotami.",
+    8: "Wymień 7 Wielkich Polaków, którzy zmienili bieg historii, nauki lub kultury.",
+    9: "Znajdź Remka i odpalcie wspólnego dymka cygara.",
+    10: "Zorganizuj epickiego grilla z Bartkiem.",
+    11: "Rozegraj z Kubą emocjonującą partię w kości jak w Wiedźminie 2.",
+    12: "Stocz pojedynek 1v1 w wymienianiu postaci z Summoner's Rift.",
+    13: "Zjedz plasterek cytryny bez zmrużenia oka lub wykonaj karne zadanie."
+};
+
+const params = new URLSearchParams(window.location.search);
+const taskNumber = parseInt(params.get("et"));
+
+if (!taskNumber || !taskTitles[taskNumber]) {
+    document.querySelector(".card").innerHTML = `
+        <h1>Błąd</h1>
+        <p>Nieprawidłowy numer zadania.</p>
+    `;
+} else {
+    document.title = `Zadanie ${taskNumber}`;
+
+    document.getElementById("taskNumber").textContent =
+        `Zadanie ${taskNumber}`;
+
+    document.getElementById("taskTitle").textContent =
+        taskTitles[taskNumber];
+
+    document.getElementById("taskText").textContent =
+        taskTexts[taskNumber];
+}
+
+function markDone() {
+    document.getElementById("doneBtn").innerText = "Ukończone";
+    document.getElementById("doneBtn").classList.add("done");
+    document.getElementById("doneBtn").disabled = true;
+
+    document.getElementById("message").style.display = "block";
+}
+</script>
+
+</body>
+</html>
